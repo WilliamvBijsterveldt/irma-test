@@ -1,0 +1,12 @@
+production: true
+
+port: 443
+url: "https://localhost:8088"
+tls_cert: "/etc/letsencrypt/live/example.com/fullchain.pem"
+tls_privkey: "/etc/letsencrypt/live/example.com/privkey.pem"
+
+no_auth: false
+requestors:
+  irma-backend:
+    auth_method: "token"
+    key: "mysecrettoken"
