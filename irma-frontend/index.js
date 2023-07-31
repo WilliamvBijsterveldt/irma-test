@@ -11,7 +11,7 @@ const irmaWeb = irma.newWeb({
       start: {
         url: o => `${o.url}/start`,
         method: 'GET',
-        headers: {'sessionKey': 'Teeeeests'},
+        headers: {'x-irma-session-id': crypto.randomUUID()},
       },
       
       mapping: {
