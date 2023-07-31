@@ -6,10 +6,12 @@ const irmaWeb = irma.newWeb({
     session: {
       // Point this to your controller:
       url: 'http://localhost:3000',
+      
   
       start: {
         url: o => `${o.url}/start`,
-        method: 'GET'
+        method: 'GET',
+        headers: {'sessionKey': 'Teeeeests'},
       },
       
       mapping: {
