@@ -8,7 +8,7 @@ const app = express();
 const port = 3000;
 const redisPort = 6379;
 
-const client  = redis.createClient(redisPort);
+const client  = redis.createClient("http://localhost:6379");
 
 const irmaRequest = {
   '@context': 'https://irma.app/ld/request/disclosure/v2',
@@ -34,7 +34,11 @@ app.get('/start', (req, res) => {
             .then(result => {
               console.log(result.disclosed[0][0].rawvalue);
 
-              client.setEx('sessionKey', 3600, rawvalue)
+              client.connect()
+
+              const sessionID = req.headers["x-irma-session-id"]
+
+              client.setEx(sessionID, 3600, result.disclosed[0][0].rawvalue)
             });
         }
       });

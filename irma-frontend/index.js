@@ -11,7 +11,7 @@ const irmaPopup = irma.newPopup({
       start: {
         url: o => `${o.url}/start`,
         method: 'GET',
-        headers: {'x-irma-session-id': crypto.randomUUID()},
+        headers: {'x-irma-session-id': crypto.randomUUID()}
       },
       
       mapping: {
