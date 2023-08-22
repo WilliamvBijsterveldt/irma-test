@@ -2,13 +2,17 @@ const express = require('express');
 const cors = require('cors');
 const redis = require('redis')
 const IrmaBackend = require('@privacybydesign/irma-backend');
-const irmaBackend = new IrmaBackend("http://localhost:8088");
+const irmaBackend = new IrmaBackend("http://server:8088");
 
 const app = express();
 const port = 3000;
 const redisPort = 6379;
 
-const client  = redis.createClient("http://localhost:6379");
+const client  = redis.createClient({
+  url: 'redis://redis:6379'
+});
+
+client.connect()
 
 const irmaRequest = {
   '@context': 'https://irma.app/ld/request/disclosure/v2',
@@ -33,8 +37,6 @@ app.get('/start', (req, res) => {
           irmaBackend.getSessionResult(token)
             .then(result => {
               console.log(result.disclosed[0][0].rawvalue);
-
-              client.connect()
 
               const sessionID = req.headers["x-irma-session-id"]
 

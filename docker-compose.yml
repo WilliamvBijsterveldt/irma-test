@@ -2,5 +2,23 @@ version: '3.8'
 services:
   redis:
     image: redis
+  server:
+    image: williamvbijsterveldt/kiesz-irma-server
+    command: irma server --url http://kiesz-irma-test.westeurope.cloudapp.azure.com:8088
     ports:
-      - 6379:6379
+      - 8088:8088
+  frontend:
+    image: williamvbijsterveldt/kiesz-irma-frontend
+    ports:
+      - 80:80
+  backend:
+    image: williamvbijsterveldt/kiesz-irma-backend
+    ports:
+      - 3000:3000
+    depends_on:
+      - redis
+      - server
+  webhook:
+    image: williamvbijsterveldt/kiesz-laura-webhook
+    ports:
+      - 5226:80
