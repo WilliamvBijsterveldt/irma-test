@@ -2,14 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const redis = require('redis')
 const IrmaBackend = require('@privacybydesign/irma-backend');
-const irmaBackend = new IrmaBackend("http://server:8088");
+const irmaBackend = new IrmaBackend("http://localhost:8088");
 
 const app = express();
 const port = 3000;
 const redisPort = 6379;
 
 const client  = redis.createClient({
-  url: 'redis://redis:6379'
+  url: 'redis://localhost:6379'
 });
 
 client.connect()

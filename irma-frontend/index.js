@@ -1,5 +1,6 @@
 // const val = localStorage.getItem("wcc.988a7d97-4f85-4608-b58e-8a36b5cf7142.config")
 // const cid = JSON.parse(val)
+const uuid = crypto.randomUUID();
 
 const irmaPopup = irma.newPopup({
     debugging: true,            // Enable to get helpful output in the browser console
@@ -8,13 +9,13 @@ const irmaPopup = irma.newPopup({
     // Back-end options
     session: {
       // Point this to your controller:
-      url: 'http://kiesz-irma-test.westeurope.cloudapp.azure.com:3000',
+      url: 'http://localhost:3000',
       
 
       start: {
         url: o => `${o.url}/start`,
         method: 'GET',
-        headers: {'x-irma-session-id': 'c593d790-0041-45ee-a48e-7970ed5703bc'}
+        headers: {'x-irma-session-id': uuid}
       },
       
       mapping: {
@@ -26,5 +27,5 @@ const irmaPopup = irma.newPopup({
   });
   
   irmaPopup.start()
-  .then(result => wcc['988a7d97-4f85-4608-b58e-8a36b5cf7142'].setContext('IrmaAuthenticated', 'true'))
+  .then(result => cmwc.get('352264d4-ac74-4b1f-8311-7bd82fa8ced6').addContext({Ingelogd: "ingelogd"}), cmwc.get('352264d4-ac74-4b1f-8311-7bd82fa8ced6').addConversationVariables({IrmaAuthenticated: uuid}))
   .catch(error => console.error("Couldn't do what you asked 😢", error));
